@@ -34,6 +34,25 @@ void FpgaController::registerFpgaService(){
     response = restClient->agentServiceRegister(payload);
 
     OATPP_LOGD("consul", "regist fpga_start_service response='%s'", response->readBodyToString()->c_str());
+
+    // Regist stop process service
+    payload = oatpp::consul::rest::AgentServiceRegisterPayload::createShared();
+    payload->id = "f2";
+    payload->name = "fpga_stop_process";
+    payload->port = 8000;
+    response = restClient->agentServiceRegister(payload);
+
+    OATPP_LOGD("consul", "regist fpga_stop_service response='%s'", response->readBodyToString()->c_str());
+
+    // Regist stat process service
+    payload = oatpp::consul::rest::AgentServiceRegisterPayload::createShared();
+    payload->id = "f3";
+    payload->name = "fpga_stat_process";
+    payload->port = 8000;
+    response = restClient->agentServiceRegister(payload);
+
+    OATPP_LOGD("consul", "regist fpga_stat_service response='%s'", response->readBodyToString()->c_str());
+
 }
 
 oatpp::String FpgaController::startFpgaProcess(String name){
